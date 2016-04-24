@@ -14,8 +14,8 @@ I've tried to match the JSON schema spec for most of it.
 - It crawls the schema recursively, so you can have resources inside resources (users/addresses)
 
 To Dos:
-- [] Header information for routes
-- [] required info -- do I want to show required when required, or optional when not required?
-- [] Make it look not terrible
-- [] Example req/response?
-- [] Get people's opinions
+- [ ] Header information for routes
+- [ ] required info -- do I want to show required when required, or optional when not required?
+- [ ] Make it look not terrible
+- [ ] Example req/response?
+- [ ] Get people's opinions
