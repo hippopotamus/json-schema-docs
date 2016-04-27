@@ -81,32 +81,31 @@ td {
             </thead>
             <tr ng-repeat="(prop, spec) in item.properties">
                 <th>{{prop}} <span ng-if="spec.required" class="small">(required)</span></td>
-                <td>{{spec.type}}</td>
+                <td ng-bind-html="formatType(spec)"></td>
                 <td><span ng-include src="'meta.tpl'"></span></td>
                 <td>{{spec.description}}</td>
             </tr>
         </table>
-        <span ng-if="item.type !== 'object'">
-            <table class="table table-bordered" style="margin-bottom:10px;">
-                <thead>
-                    <tr>
-                        <th>Type</th>
-                        <th>Meta</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
+
+        <table ng-if="item.type !== 'object'" class="table table-bordered" style="margin-bottom:10px;">
+            <thead>
                 <tr>
-                    <td>{{item.type}}</td>
-                    <td ng-bind-html="formatSpecMeta(item)"></td>
-                    <td>{{item.description}}</td>
+                    <th>Type</th>
+                    <th>Meta</th>
+                    <th>Description</th>
                 </tr>
-            </table>
-        </span>
+            </thead>
+            <tr>
+                <td ng-bind-html="formatType(item)"></td>
+                <td ng-bind-html="formatSpecMeta(item)"></td>
+                <td>{{item.description}}</td>
+            </tr>
+        </table>
     </script>
 
     <script type="text/ng-template" id="meta.tpl">
         <span ng-if="spec.type === 'array'">
-            <p><span ng-repeat="(key, val) in spec" ng-if="formatSpecMeta(val)" ng-bind-html="formatSpecMeta(val)"></span> </p>
+            <p ng-bind-html="formatSpecMeta(spec)"></p>
             <p>Allowed Formats</p>
             <span ng-repeat="item in spec.items" ng-include src="'table.tpl'"></span>
         </span>
@@ -141,7 +140,6 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
         _.map($scope.resources, function (resource) {
             mapRequiredOntoProperties(resource)
         })
-        console.log($scope.resources)
     }
 
     function replaceRefs (schema) {
@@ -220,8 +218,30 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
         })
     }
 
+    $scope.formatType = function (item) {
+        var type = _.get(item, 'type')
+        if (type) {
+            return type
+        } else if (_.get(item, 'anyOf')) {
+            return 'anyOf'
+        } else if (_.get(item, 'allOf')) {
+            return 'anyOf'
+        } else {
+            return
+        }
+    }
+
     $scope.formatSpecMeta = function (spec) {
-        if (!_.isObject(spec) || _.isArray(spec)) {
+        var anyOf = _.get(spec, 'anyOf')
+        if (anyOf) {
+            return formatArrayMeta(anyOf)
+        }
+        var allOf = _.get(spec, 'allOf')
+        if (allOf) {
+            return formatArrayMeta(allOf)
+        }
+
+        if (!_.isObject(spec)) {
             return
         }
 
@@ -233,6 +253,14 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
         return _.map(_.keys(omittedSpecs), function (key) {
             return '<strong>'+key+':</strong> '+omittedSpecs[key]
         }).join(', ')
+    }
+
+    function formatArrayMeta (items) {
+        return _.map(items, function (item) {
+            return '{' + _.map(_.keys(item), function (key) {
+                return '<strong>'+key+':</strong> ' + item[key]
+            }).join(', ')
+        }).join('}, ') + '}'
     }
 });
 </script>
