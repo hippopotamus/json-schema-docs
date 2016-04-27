@@ -80,7 +80,7 @@ td {
                 </tr>
             </thead>
             <tr ng-repeat="(prop, spec) in item.properties">
-                <th>{{prop}}</td>
+                <th>{{prop}} <span ng-if="spec.required" class="small">(required)</span></td>
                 <td>{{spec.type}}</td>
                 <td><span ng-include src="'meta.tpl'"></span></td>
                 <td>{{spec.description}}</td>
@@ -106,6 +106,7 @@ td {
 
     <script type="text/ng-template" id="meta.tpl">
         <span ng-if="spec.type === 'array'">
+            <p><span ng-repeat="(key, val) in spec" ng-if="formatSpecMeta(val)" ng-bind-html="formatSpecMeta(val)"></span> </p>
             <p>Allowed Formats</p>
             <span ng-repeat="item in spec.items" ng-include src="'table.tpl'"></span>
         </span>
@@ -137,7 +138,10 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
         $scope.resources = []
         buildFlatResourcesList(schema)
         $scope.sidebarItems = buildSidebar($scope.resources)
-        console.log($scope.sidebarItems)
+        _.map($scope.resources, function (resource) {
+            mapRequiredOntoProperties(resource)
+        })
+        console.log($scope.resources)
     }
 
     function replaceRefs (schema) {
@@ -175,7 +179,7 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
             return {
                 name: item.resource,
                 subResources: _.chain(item).keys().map(function (key) {
-                    console.log(key)
+                    /* mapping the name of the resource and the uri. name for the title in sidebar, id (uri) is used for bookmarking the item */
                     return {
                         name: item[key].name,
                         id: item[key].id
@@ -185,11 +189,47 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
         })
     }
 
+    function mapRequiredOntoProperties (resource) {
+        var properties = _.get(resource, 'properties')
+        var requiredProperties = _.get(resource, 'required')
+        if (properties && requiredProperties) {
+            _.forEach(requiredProperties, function (propertyName) {
+                var property = _.get(properties, propertyName)
+                if (!property) {
+                    console.log(
+                        "Property {prop} is listed as required in resource {resource}, but is not in the schema"
+                        .replace('{prop}', propertyName).replace('{resource}', _.get(resource, 'name'))
+                    )
+                } else {
+                    _.merge(property, { required: true })
+                }
+            })
+        }
+        /* if there is an object, recurse onto it */
+        _.forEach(_.keys(resource), function (key) {
+            /* if it's an object, go deeper */
+            if (_.isObject(resource[key])) {
+                mapRequiredOntoProperties(resource[key])
+            }
+            if (key === 'items' && _.isArray(resource[key])) {
+                /* items can have an array of objects, so tree recursion here :) */
+                _.forEach(resource[key], function (item) {
+                    mapRequiredOntoProperties(resource[key])
+                })
+            }
+        })
+    }
+
     $scope.formatSpecMeta = function (spec) {
-        var omittedSpecs = _.omit(spec, ['type', 'description', '$$hashKey'])
+        if (!_.isObject(spec) || _.isArray(spec)) {
+            return
+        }
+
+        var omittedSpecs = _.omit(spec, ['type', 'description', '$$hashKey', 'required', 'items'])
         if (!_.keys(omittedSpecs).length) {
             return
         }
+
         return _.map(_.keys(omittedSpecs), function (key) {
             return '<strong>'+key+':</strong> '+omittedSpecs[key]
         }).join(', ')
