@@ -17,8 +17,9 @@ I've tried to match the JSON schema spec for most of it.
 
 #### To Dos
 - [ ] Header information for routes
-- [ ] required info -- do I want to show required when required, or optional when not required?
+- [x] required info -- do I want to show required when required, or optional when not required?
 - [ ] Make it look not terrible
 - [ ] Example req/response?
-- [ ] Make a list of other things to add support for: anyOf, allOf, etc
+- [x] Add support for: anyOf, allOf, etc
+  - [ ] Look through v5 spec and see if there is anything that needs special formatting (like anyOf)
 - [ ] Get people's opinions
