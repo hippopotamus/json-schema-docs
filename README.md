@@ -16,10 +16,10 @@ I've tried to match the JSON schema spec for most of it.
 - It crawls the schema recursively, so you can have resources inside resources (users/addresses)
 
 #### To Dos
-- [ ] Header information for routes
+- [x] Header information for routes
 - [x] required info -- do I want to show required when required, or optional when not required?
 - [ ] Make it look not terrible
-- [ ] Example req/response?
+- [x] Example req/response?
 - [x] Add support for: anyOf, allOf, etc
   - [ ] Look through v5 spec and see if there is anything that needs special formatting (like anyOf)
 - [ ] Get people's opinions
