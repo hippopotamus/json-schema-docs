@@ -9,7 +9,7 @@ router.get('/docs', function (req, res) {
 })
 
 router.get('/schema', function (req, res) {
-    res.json(require('./schema'))
+    res.json(require('./schemas'))
 })
 
 app.use('/', router)
