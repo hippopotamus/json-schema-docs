@@ -68,8 +68,9 @@ module.exports = {
         "type": "object",
         "properties": {
             "id": { "type": "string", "format": "id", },
+            "addressId": { "type": "string", "format": "id", },
         },
-        "required": ["id"],
+        "required": ["id", "addressId"],
         "response": {
             "status": {
                 "type": "Success",
@@ -77,14 +78,14 @@ module.exports = {
             },
             "type": "object",
             "properties": {
-                "id": { "type": "string", "format": "uuid", },
+                "addressId": { "type": "string", "format": "uuid", },
                 "street": { "type": "string", },
                 "streetExtended": { "type": "string", "default": "" },
                 "city": { "type": "string", "minLength": 2, "maxLength": 40, },
                 "state": { "type": "string", "minLength": 2, "maxLength": 2, "enum": enums.states },
                 "country": { "type": "string", "minLength": 2, "maxLength": 4, "enums": enums.countries },
             },
-            "required": ["id", "street", "streetExtended", "city", "state", "country"],
+            "required": ["addressId", "street", "streetExtended", "city", "state", "country"],
             "examples": [
                 {
                     "status": {
@@ -128,13 +129,14 @@ module.exports = {
         "type": "object",
         "properties": {
             "id": { "type": "string", "format": "uuid" },
+            "addressId": { "type": "string", "format": "uuid", },
             "street": { "type": "string", },
             "streetExtended": { "type": "string", "default": "" },
             "city": { "type": "string", "minLength": 2, "maxLength": 40, },
             "state": { "type": "string", "minLength": 2, "maxLength": 2, "enum": enums.states },
             "country": { "type": "string", "minLength": 2, "maxLength": 4, "enums": enums.countries },
         },
-        "required": ["id"],
+        "required": ["id", "addressId"],
         "response": {
             "status": {
                 "code": 200,
@@ -144,8 +146,8 @@ module.exports = {
         },
     },
     "delete": {
-        "name": "Delete User",
-        "id": "/users/:id",
+        "name": "Delete Address",
+        "id": "/users/:id/addresses/:addressId",
         "method": "DELETE",
         "header": {
             "type": "object",
@@ -156,8 +158,9 @@ module.exports = {
         "type": "object",
         "properties": {
             "id": { "type": "string", "format": "uuid" },
+            "addressId": { "type": "string", "format": "uuid" },
         },
-        "required": ["id"],
+        "required": ["id", "addressId"],
         "response": {
             "status": {
                 "type": "Success",

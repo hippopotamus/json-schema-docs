@@ -82,7 +82,7 @@ ul.nav.nav-tabs.nav-justified {
                         <ul class="side-nav nav nav-pills nav-stacked">
                             <li class="nav-header">{{item.name}}</li>
                             <li ng-repeat="subResource in item.subResources">
-                                <a href="#{{subResource.id}}">{{subResource.name}}</a>
+                                <a href="#{{subResource.method}}{{subResource.id}}">{{subResource.name}}</a>
                             </li>
                         </ul>
                     </span>
@@ -99,9 +99,9 @@ ul.nav.nav-tabs.nav-justified {
                         <h2>{{resource.resource}}</h2>
                         <h4 ng-if="resource.description">{{resource.description}}</h4>
                         <div ng-repeat="item in resource" ng-if="item.properties">
-                            <hr>
+                            <hr id="{{item.method}}{{item.id}}">
 
-                            <h4 id="{{item.id}}">{{item.name}}</h4>
+                            <h4>{{item.name}}</h4>
                             <p><strong>{{item.method}}<strong> <code>{{item.id}}</code></p>
 
                             <span ng-if="item.header" ng-init="item=item.header">
