@@ -16,12 +16,6 @@ ul {
     width: 300px;
     margin: 20px;
 }
-.nav > li.nav-header > a {
-    cursor: default;
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
 code {
     color: #FFF;
     background-color: #042A48;
@@ -35,6 +29,23 @@ th {
 }
 td {
     background-color: #C3C6C8;
+}
+.nav-sidebar {
+    position: fixed;
+    height: 100%;
+    padding-bottom: 40px;
+    border-right: 1px solid #ddd;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.side-nav.nav > li.nav-header > a {
+    cursor: default;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.side-nav > ul.nav > li > a:hover {
+    width: 250px;
 }
 ul.nav.nav-tabs.nav-justified {
     margin-left: 0px;
@@ -65,15 +76,24 @@ ul.nav.nav-tabs.nav-justified {
 <div ng-app="app">
     <div class="container-fluid" ng-cloak ng-controller="controller">
         <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar-offcanvas">
-                <div class="list-group">
+            <nav class="col-sm-3 col-md-2 nav-sidebar">
+                <div class="container">
                     <span ng-repeat="item in sidebarItems">
-                        <p class="list-group-item disabled">{{item.name}}</p>
-                        <a class="list-group-item" ng-repeat="subResource in item.subResources" href="#{{subResource.id}}">{{subResource.name}}</a>
+                        <ul class="side-nav nav nav-pills nav-stacked">
+                            <li class="nav-header">{{item.name}}</li>
+                            <li ng-repeat="subResource in item.subResources">
+                                <a href="#{{subResource.id}}">{{subResource.name}}</a>
+                            </li>
+                        </ul>
                     </span>
                 </div>
-            </div>
-            <div class="col-sm-9 col-md-10">
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+                <br>
+                <h1>My Super Awesome Docs</h1>
+                <br>
                 <div class="row" ng-repeat="resource in resources track by $index">
                     <div class="col-xs-12">
                         <h2>{{resource.resource}}</h2>
