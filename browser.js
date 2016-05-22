@@ -101,7 +101,7 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
         } else if (_.get(item, 'anyOf')) {
             return 'anyOf'
         } else if (_.get(item, 'allOf')) {
-            return 'anyOf'
+            return 'allOf'
         } else {
             return
         }

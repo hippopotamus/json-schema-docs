@@ -115,14 +115,14 @@ ul.nav.nav-tabs.nav-justified {
 
                             <span ng-if="item.response" ng-init="item=item.response">
                                 <br>
-                                <h4>Response</h4>
+                                <h4>Response Success Format</h4>
                                 <span ng-include src="'table.tpl'"></span>
 
                                 <div ng-if="item.examples" class="row">
                                     <div class="col-xs-12">
                                         <h4>Examples</h4>
                                         <uib-tabset justified="true">
-                                            <uib-tab ng-repeat="example in item.examples" heading="{{example.statusCode}}">
+                                            <uib-tab ng-repeat="example in item.examples" heading=" {{example.status.type}} : {{example.status.code}}">
                                                 <div ng-bind-html="htmlifyJSON(example.properties)"></div>
                                             </uib-tab>
                                         </uib-tabset>

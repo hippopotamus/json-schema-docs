@@ -17,7 +17,7 @@ module.exports = {
             "firstName": { "type": "string", "minLength": 1, "maxLength": 40, },
             "lastName": { "type": "string", "minLength": 1, "maxLength": 80, },
             "password": { "type": "string", "minLength": 8, "maxLength": 32, },
-            "phone": { "type": "string", "pattern": /1\d{10}/, "description": "Just give the digits in a string.", },
+            "phone": { "type": "string", "pattern": "1\d{10}", "description": "Just give the digits in a string.", },
             "timezone": {
                 "type": "string",
                 "format": "timezone",
@@ -36,7 +36,7 @@ module.exports = {
                 "email": { "type": "string", "format": "email", },
                 "firstName": { "type": "string", "minLength": 1, "maxLength": 40, },
                 "lastName": { "type": "string", "minLength": 1, "maxLength": 80, },
-                "phone": { "type": "string", "pattern": /1\d{10}/, "description": "Just give the digits in a string.", },
+                "phone": { "type": "string", "pattern": "1\d{10}", "description": "Just give the digits in a string.", },
                 "timezone": {
                     "type": "string",
                     "format": "timezone",
@@ -94,7 +94,7 @@ module.exports = {
                 "email": { "type": "string", "format": "email", },
                 "firstName": { "type": "string", "minLength": 1, "maxLength": 40, },
                 "lastName": { "type": "string", "minLength": 1, "maxLength": 80, },
-                "phone": { "type": "string", "pattern": /1\d{10}/, "description": "Just give the digits in a string.", },
+                "phone": { "type": "string", "pattern": "1\d{10}", "description": "Just give the digits in a string.", },
                 "timezone": {
                     "type": "string",
                     "format": "timezone",
