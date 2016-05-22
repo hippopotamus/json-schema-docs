@@ -5,7 +5,7 @@ i got annoyed writing documentation, when i felt like our json validation should
 i'll turn this into an npm package after i'm done.  
 it's pretty easy to use. you serve the html file to whatever uri you'd like, add meta information to your schema, and you make a route called '/schema' and send serve your schema as a json response.  
 
-i've tried to match the json schema spec for most of it. the extra meta information needed for this fits around what i read in the spec.
+i've tried to match the json schema spec. the extra meta information needed for this fits around what i read in the spec.
 
 [color palette](http://paletton.com/#uid=13x0u0kktl7Xh3pEkaI5tyV00Kh)
 
@@ -14,10 +14,5 @@ i've tried to match the json schema spec for most of it. the extra meta informat
 - for sub resources you add the k/v pair "name" => "method name" (e.g "Create User")
 - you can use the id attribute to list the uri for each sub resource. this will also be used for bookmarking the item
 - it crawls the schema recursively, so you can have resources inside resources (users/addresses)
-
-#### to Dos
-- [ ] fix bookmarks
-- [ ] look through v5 spec and see if there is anything that needs special formatting (pattern needs some <3)
-- [ ] get people's opinions (give me your opinion)
 
 i'm planning on using a similar structure to get some tests out of this (or a similar) convention for json schema, as well. that was the initial idea behind adding response to the resource info. everything is in the schema for some basic unit tests. hopefully, in the next few weeks, i'll get to write a wrapper around mocha that does exactly that. it'd be nice to get some of the "i hope i didn't break anything by making this simple change" tests for free, along with automatic documentation for a little bit of schema definition...
