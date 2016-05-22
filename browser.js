@@ -58,7 +58,8 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
                     /* mapping the name of the resource and the uri. name for the title in sidebar, id (uri) is used for bookmarking the item */
                     return {
                         name: item[key].name,
-                        id: item[key].id
+                        id: item[key].id,
+                        method: item[key].method,
                     }
                 }).filter('name').value()
             }

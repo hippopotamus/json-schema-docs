@@ -78,6 +78,9 @@ ul.nav.nav-tabs.nav-justified {
         <div class="row">
             <nav class="col-sm-3 col-md-2 nav-sidebar">
                 <div class="container">
+                    <ul class="side-nav nav nav-pills nav-stacked">
+                        <li class="nav-header"><a href="#top">Top of Page</a></li>
+                    </ul>
                     <span ng-repeat="item in sidebarItems">
                         <ul class="side-nav nav nav-pills nav-stacked">
                             <li class="nav-header">{{item.name}}</li>
@@ -90,7 +93,7 @@ ul.nav.nav-tabs.nav-justified {
             </nav>
         </div>
         <div class="row">
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+            <div id="/top" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
                 <br>
                 <h1>My Super Awesome Docs</h1>
                 <br>
@@ -99,7 +102,7 @@ ul.nav.nav-tabs.nav-justified {
                         <h2>{{resource.resource}}</h2>
                         <h4 ng-if="resource.description">{{resource.description}}</h4>
                         <div ng-repeat="item in resource" ng-if="item.properties">
-                            <hr id="{{item.method}}{{item.id}}">
+                            <hr id="/{{item.method}}{{item.id}}">
 
                             <h4>{{item.name}}</h4>
                             <p><strong>{{item.method}}<strong> <code>{{item.id}}</code></p>
