@@ -8,6 +8,8 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
     })
 
     function mapJSON(schema) {
+        /* i could optimize this pretty easily. if it eats your browser, let me know, and i'll make it better... if you're reading this, you could probably do it too.
+        i will happily do it for someone who found this useful. */
         replaceRefs(schema)
 
         $scope.resources = []
@@ -131,6 +133,17 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
         }).join(', ')
     }
 
+    $scope.formatNonObjSpecMeta = function (spec) {
+        var omittedSpecs = _.omit(spec, ['type', 'description', '$$hashKey', 'required', 'status'])
+        if (!_.keys(omittedSpecs).length) {
+            return
+        }
+
+        return _.map(_.keys(omittedSpecs), function (key) {
+            return '<strong>'+key+':</strong> '+omittedSpecs[key]
+        }).join(', ')
+    }
+
     $scope.htmlifyJSON = function (obj) {
         return jsonMarkup(obj)
     }
@@ -142,4 +155,4 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
             }).join(', ')
         }).join('}, ') + '}'
     }
-});
+})
