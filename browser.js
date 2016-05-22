@@ -1,4 +1,5 @@
 var jsonMarkup = require('json-markup')
+var JsonPointer = require('json-ptr')
 
 angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvider){
     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
