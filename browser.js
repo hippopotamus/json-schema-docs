@@ -133,6 +133,8 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
             var val = omittedSpecs[key]
             if (_.isArray(val)) {
                 return '<strong>'+key+':</strong> '+val.join(', ')
+            } else if (key === 'pattern') {
+                return '<strong>'+key+':</strong> '+'/val/'.replace('val', val)
             }
             return '<strong>'+key+':</strong> '+val
         }).join(', ')
