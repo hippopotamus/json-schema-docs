@@ -19,7 +19,7 @@ module.exports = {
             "streetExtended": { "type": "string", },
             "city": { "type": "string", "minLength": 2, "maxLength": 40, },
             "state": { "type": "string", "minLength": 2, "maxLength": 2, "enum": enums.states },
-            "country": { "type": "string", "minLength": 2, "maxLength": 4, "enums": enums.countries },
+            "country": { "type": "string", "minLength": 2, "maxLength": 4, "enum": enums.countries },
         },
         "required": ["street", "city", "state", "country"],
         "response": {
@@ -33,7 +33,7 @@ module.exports = {
                 "streetExtended": { "type": "string", "default": "" },
                 "city": { "type": "string", "minLength": 2, "maxLength": 40, },
                 "state": { "type": "string", "minLength": 2, "maxLength": 2, "enum": enums.states },
-                "country": { "type": "string", "minLength": 2, "maxLength": 4, "enums": enums.countries },
+                "country": { "type": "string", "minLength": 2, "maxLength": 4, "enum": enums.countries },
             },
             "required": ["id", "street", "streetExtended", "city", "state", "country"],
             "examples": [
@@ -83,7 +83,7 @@ module.exports = {
                 "streetExtended": { "type": "string", "default": "" },
                 "city": { "type": "string", "minLength": 2, "maxLength": 40, },
                 "state": { "type": "string", "minLength": 2, "maxLength": 2, "enum": enums.states },
-                "country": { "type": "string", "minLength": 2, "maxLength": 4, "enums": enums.countries },
+                "country": { "type": "string", "minLength": 2, "maxLength": 4, "enum": enums.countries },
             },
             "required": ["addressId", "street", "streetExtended", "city", "state", "country"],
             "examples": [
@@ -134,7 +134,7 @@ module.exports = {
             "streetExtended": { "type": "string", "default": "" },
             "city": { "type": "string", "minLength": 2, "maxLength": 40, },
             "state": { "type": "string", "minLength": 2, "maxLength": 2, "enum": enums.states },
-            "country": { "type": "string", "minLength": 2, "maxLength": 4, "enums": enums.countries },
+            "country": { "type": "string", "minLength": 2, "maxLength": 4, "enum": enums.countries },
         },
         "required": ["id", "addressId"],
         "response": {

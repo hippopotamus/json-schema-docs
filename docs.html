@@ -20,6 +20,9 @@ code {
     color: #FFF;
     background-color: #042A48;
 }
+.table-static {
+    margin-bottom:10px;
+}
 thead th {
     color: #FFF;
     background-color: #01213A;
@@ -141,7 +144,7 @@ ul.nav.nav-tabs.nav-justified {
     </div>
 
     <script type="text/ng-template" id="table.tpl">
-        <table ng-if="item.type === 'object'" class="table table-bordered" style="margin-bottom:10px;">
+        <table ng-if="item.type === 'object'" class="table table-bordered table-static">
             <thead>
                 <tr>
                     <th>Field</th>
@@ -158,7 +161,7 @@ ul.nav.nav-tabs.nav-justified {
             </tr>
         </table>
 
-        <table ng-if="item.type !== 'object'" class="table table-bordered" style="margin-bottom:10px;">
+        <table ng-if="item.type !== 'object'" class="table table-bordered table-static">
             <thead>
                 <tr>
                     <th>Type</th>

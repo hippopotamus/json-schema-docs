@@ -120,7 +120,6 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
         if (allOf) {
             return formatArrayMeta(allOf)
         }
-
         if (!_.isObject(spec)) {
             return
         }
@@ -131,7 +130,11 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
         }
 
         return _.map(_.keys(omittedSpecs), function (key) {
-            return '<strong>'+key+':</strong> '+omittedSpecs[key]
+            var val = omittedSpecs[key]
+            if (_.isArray(val)) {
+                return '<strong>'+key+':</strong> '+val.join(', ')
+            }
+            return '<strong>'+key+':</strong> '+val
         }).join(', ')
     }
 
