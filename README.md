@@ -1,6 +1,8 @@
 # json-schema-docs
 a framework agnostic documentation generator for your json schemas.
 
+[See the example app here](http://159.203.114.143:4000/docs)
+
 i got annoyed writing documentation, when i felt like our json validation should be self documenting.  
 i'll turn this into an npm package after i'm done.  
 it's pretty easy to use. you serve the html file to whatever uri you'd like, add meta information to your schema, and you make a route called '/schema' and send serve your schema as a json response.  
