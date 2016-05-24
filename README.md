@@ -1,7 +1,7 @@
 # json-schema-docs
 a framework agnostic documentation generator for your json schemas.
 
-[See the example app here](http://159.203.114.143:4000/docs)
+[See the example app here](http://hippopotamus2.github.io/json-docs.html)
 
 i got annoyed writing documentation, when i felt like our json validation should be self documenting.  
 i'll turn this into an npm package after i'm done.  
