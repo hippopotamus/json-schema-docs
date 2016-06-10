@@ -3,9 +3,10 @@ var enums = require('../../enums')
 module.exports = {
     "resource": "Users / Addresses",
     "description": "URIs for user addresses",
+    root: "/:id/addresses",
     "create": {
         "name": "Create Address",
-        "id": "/users/:id/address",
+        "id": "/",
         "method": "POST",
         "header": {
             "type": "object",
@@ -56,7 +57,7 @@ module.exports = {
     },
     "getById": {
         "name": "Get Address By Id",
-        "id": "/users/:id/addresses/:addressId",
+        "id": "/:addressId",
         "method": "GET",
         "header": {
             "type": "object",
@@ -117,7 +118,7 @@ module.exports = {
     },
     "update": {
         "name": "Update Address",
-        "id": "/users/:id/addresses/:addressId",
+        "id": "/:addressId",
         "method": "PUT",
         "header": {
             "type": "object",
@@ -147,7 +148,7 @@ module.exports = {
     },
     "delete": {
         "name": "Delete Address",
-        "id": "/users/:id/addresses/:addressId",
+        "id": "/:addressId",
         "method": "DELETE",
         "header": {
             "type": "object",

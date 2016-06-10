@@ -1,4 +1,5 @@
 var jsonMarkup = require('json-markup')
+var path = require('path')
 
 angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvider){
     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -9,20 +10,25 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
 
     function mapJSON(schema) {
         $scope.resources = []
-        buildFlatResourcesList(schema)
+        buildFlatResourcesList(schema, "")
         $scope.sidebarItems = buildSidebar($scope.resources)
         _.map($scope.resources, function (resource) {
             mapRequiredOntoProperties(resource)
         })
     }
 
-    function buildFlatResourcesList (schema) {
+    function buildFlatResourcesList (schema, root) {
         _.forEach(_.keys(schema), function (key) {
             var item = schema[key]
             if (_.isObject(item)) {
                 _.forEach(_.keys(item), function (k) {
+                    if (k === 'id') {
+                        item[k] = path.join(root, item[k])
+                        console.log(item[k])
+                    }
                     if (k === 'resource') {
-                        buildFlatResourcesList(item)
+                        root = path.join(root, item.root)
+                        buildFlatResourcesList(item, root)
                         item = _.omit(item, k)
                     }
                 })
@@ -39,10 +45,13 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
                 name: item.resource,
                 subResources: _.chain(item).keys().map(function (key) {
                     /* mapping the name of the resource and the uri. name for the title in sidebar, id (uri) is used for bookmarking the item */
-                    return {
-                        name: item[key].name,
-                        id: item[key].id,
-                        method: item[key].method,
+                    if (item[key].id) {
+                        return {
+                            name: item[key].name,
+                            id: item[key].id,
+                            method: item[key].method,
+                        }
+
                     }
                 }).filter('name').value()
             }

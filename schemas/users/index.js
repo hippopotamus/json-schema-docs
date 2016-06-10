@@ -1,9 +1,10 @@
 module.exports = {
     "resource": "Users",
     "description": "URIs for users",
+    root: "/users",
     "create": {
         "name": "Create User",
-        "id": "/users",
+        "id": "/",
         "method": "POST",
         "header": {
             "type": "object",
@@ -76,7 +77,7 @@ module.exports = {
     },
     "getById": {
         "name": "Get User By Id",
-        "id": "/users/:id",
+        "id": "/:id",
         "method": "GET",
         "type": "object",
         "properties": {
@@ -133,7 +134,7 @@ module.exports = {
     },
     "update": {
         "name": "Update User",
-        "id": "/users/:id",
+        "id": "/:id",
         "method": "PUT",
         "header": {
             "type": "object",
@@ -162,7 +163,7 @@ module.exports = {
     },
     "delete": {
         "name": "Delete User",
-        "id": "/users/:id",
+        "id": "/:id",
         "method": "DELETE",
         "header": {
             "type": "object",
