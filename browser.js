@@ -1,5 +1,4 @@
 var jsonMarkup = require('json-markup')
-var JsonPointer = require('json-ptr')
 
 angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvider){
     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -9,28 +8,11 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
     })
 
     function mapJSON(schema) {
-        /* i could optimize this pretty easily. if it eats your browser, let me know, and i'll make it better... if you're reading this, you could probably do it too.
-        i will happily do it for someone who found this useful. */
-        replaceRefs(schema)
-
         $scope.resources = []
         buildFlatResourcesList(schema)
         $scope.sidebarItems = buildSidebar($scope.resources)
         _.map($scope.resources, function (resource) {
             mapRequiredOntoProperties(resource)
-        })
-    }
-
-    function replaceRefs (schema) {
-        /* This crawls the JSON schema for all $refs, and replaces them with the schema they're referencing */
-        /* Maybe I'm misunderstanding JSON pointers. I was hoping I there was some magic JSON ptr api fn that replaces all $refs with the obj they reference */
-        var ptr = JsonPointer.noConflict()
-        _.forEach(_.keys(ptr.flatten(schema)), function (item) {
-             var pathList = ptr.decode(item)
-             if (pathList[pathList.length-1] === '$ref') {
-                var objPath = '#/' + _.slice(pathList, 0, pathList.length-1).join('/') // building abs path to item with a $ref
-                ptr.set(schema, objPath, ptr.get(schema, ptr.get(schema, item))) // set that item to the schema referenced in it's $ref
-             }
         })
     }
 

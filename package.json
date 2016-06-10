@@ -7,8 +7,7 @@
   },
   "dependencies": {
     "debug": "^2.2.0",
-    "express": "~4.13.1",
-    "json-ptr": "^1.0.0"
+    "express": "~4.13.1"
   },
   "devDependencies": {
     "browserify": "^13.0.1",
