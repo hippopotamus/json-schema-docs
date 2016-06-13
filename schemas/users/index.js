@@ -1,11 +1,15 @@
+var schema = {
+
+}
+
 module.exports = {
-    "resource": "Users",
+    'resource': 'User',
     "description": "URIs for users",
-    root: "/users",
+    rootUri: "/users",
     "create": {
-        "name": "Create User",
-        "id": "/",
+        uri: "/",
         "method": "POST",
+        'fn': 'create',
         "header": {
             "type": "object",
             "properties": {
@@ -77,7 +81,7 @@ module.exports = {
     },
     "getById": {
         "name": "Get User By Id",
-        "id": "/:id",
+        uri: "/:id",
         "method": "GET",
         "type": "object",
         "properties": {
@@ -134,7 +138,7 @@ module.exports = {
     },
     "update": {
         "name": "Update User",
-        "id": "/:id",
+        uri: "/:id",
         "method": "PUT",
         "header": {
             "type": "object",
@@ -163,7 +167,7 @@ module.exports = {
     },
     "delete": {
         "name": "Delete User",
-        "id": "/:id",
+        uri: "/:id",
         "method": "DELETE",
         "header": {
             "type": "object",
