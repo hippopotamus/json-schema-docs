@@ -3,10 +3,10 @@ var enums = require('../../enums')
 module.exports = {
     "resource": "Users / Addresses",
     "description": "URIs for user addresses",
-    root: "/:id/addresses",
+    rootUri: "/:id/addresses",
     "create": {
         "name": "Create Address",
-        "id": "/",
+        "uri": "/",
         "method": "POST",
         "header": {
             "type": "object",
@@ -44,7 +44,7 @@ module.exports = {
                         "code": 201,
                     },
                     "properties": {
-                        "id": "b1d93e77-0f72-460c-993b-9e11390febf5",
+                        "uri": "b1d93e77-0f72-460c-993b-9e11390febf5",
                         "street": "123 Home Lane",
                         "streetExtended": "",
                         "city": "Harrisburg",
@@ -57,7 +57,7 @@ module.exports = {
     },
     "getById": {
         "name": "Get Address By Id",
-        "id": "/:addressId",
+        "uri": "/:addressId",
         "method": "GET",
         "header": {
             "type": "object",
@@ -94,7 +94,7 @@ module.exports = {
                         "code": 200,
                     },
                     "properties": {
-                        "id": "b1d93e77-0f72-460c-993b-9e11390febf5",
+                        "uri": "b1d93e77-0f72-460c-993b-9e11390febf5",
                         "street": "123 Home Lane",
                         "streetExtended": "",
                         "city": "Harrisburg",
@@ -118,7 +118,7 @@ module.exports = {
     },
     "update": {
         "name": "Update Address",
-        "id": "/:addressId",
+        "uri": "/:addressId",
         "method": "PUT",
         "header": {
             "type": "object",
@@ -148,7 +148,7 @@ module.exports = {
     },
     "delete": {
         "name": "Delete Address",
-        "id": "/:addressId",
+        "uri": "/:addressId",
         "method": "DELETE",
         "header": {
             "type": "object",

@@ -88,7 +88,7 @@ ul.nav.nav-tabs.nav-justified {
                         <ul class="side-nav nav nav-pills nav-stacked">
                             <li class="nav-header">{{item.name}}</li>
                             <li ng-repeat="subResource in item.subResources">
-                                <a href="#{{subResource.method}}{{subResource.id}}">{{subResource.name}}</a>
+                                <a href="#{{subResource.method}}{{subResource.uri}}">{{subResource.name}}</a>
                             </li>
                         </ul>
                     </span>
@@ -105,10 +105,10 @@ ul.nav.nav-tabs.nav-justified {
                         <h2>{{resource.resource}}</h2>
                         <h4 ng-if="resource.description">{{resource.description}}</h4>
                         <div ng-repeat="item in resource" ng-if="item.properties">
-                            <hr id="/{{item.method}}{{item.id}}">
+                            <hr id="/{{item.method}}{{item.uri}}">
 
                             <h4>{{item.name}}</h4>
-                            <p><strong>{{item.method}}<strong> <code>{{item.id}}</code></p>
+                            <p><strong>{{item.method}}<strong> <code>{{item.uri}}</code></p>
 
                             <span ng-if="item.header" ng-init="item=item.header">
                                 <br>
@@ -196,6 +196,9 @@ ul.nav.nav-tabs.nav-justified {
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.2/ui-bootstrap-tpls.min.js"></script>
-<script src="bundle.js"></script>
+
+<script src="bundle.js">
+// inject:js
+</script>
 </body>
 </html>

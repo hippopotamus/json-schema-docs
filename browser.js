@@ -17,18 +17,22 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
         })
     }
 
-    function buildFlatResourcesList (schema, root) {
+    function buildFlatResourcesList (schema, rootUri) {
         _.forEach(_.keys(schema), function (key) {
             var item = schema[key]
             if (_.isObject(item)) {
                 _.forEach(_.keys(item), function (k) {
-                    if (k === 'id') {
-                        item[k] = path.join(root, item[k])
-                        console.log(item[k])
+                    if (k === 'uri') {
+                        item[k] = path.join(rootUri, item[k])
                     }
                     if (k === 'resource') {
-                        root = path.join(root, item.root)
-                        buildFlatResourcesList(item, root)
+                        var nextRootUri = _.get(item, 'rootUri', '')
+                        if (!nextRootUri.length) {
+                            console.error("You are missing a rootUri!")
+                        }
+                        rootUri = path.join(rootUri, nextRootUri)
+
+                        buildFlatResourcesList(item, rootUri)
                         item = _.omit(item, k)
                     }
                 })
@@ -44,11 +48,11 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvi
             return {
                 name: item.resource,
                 subResources: _.chain(item).keys().map(function (key) {
-                    /* mapping the name of the resource and the uri. name for the title in sidebar, id (uri) is used for bookmarking the item */
-                    if (item[key].id) {
+                    /* mapping the name of the resource and the uri. name for the title in sidebar, uri is used for bookmarking the item */
+                    if (item[key].uri) {
                         return {
                             name: item[key].name,
-                            id: item[key].id,
+                            uri: item[key].uri,
                             method: item[key].method,
                         }
 

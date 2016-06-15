@@ -5,7 +5,7 @@ let app = express();
 app.use(express.static(__dirname))
 let router = express.Router();
 router.get('/docs', function (req, res) {
-    res.sendFile('docs.html', { root: __dirname })
+    res.sendFile('./docs.html', { root: __dirname })
 })
 
 router.get('/schema', function (req, res) {
