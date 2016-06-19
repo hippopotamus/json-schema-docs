@@ -1,2 +1,4 @@
 *
-!json-schema-docs.html
+!json-schema-docs.jade
+!bundle.js
+!index.js

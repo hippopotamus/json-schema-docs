@@ -4,9 +4,13 @@ var path = require('path')
 angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvider){
     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 }).controller('controller', function($scope, $http, $timeout){
-    $http.get('/schema').then(function(res){
-        $scope.schema = mapJSON(res.data)
-    })
+
+    $scope.init = function (params) {
+        $http.get(params.schemaUrl).then(function(res){
+            $scope.schema = mapJSON(res.data)
+        })
+
+    }
 
     function mapJSON(schema) {
         $scope.resources = []

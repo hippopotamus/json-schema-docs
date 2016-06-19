@@ -1,0 +1,171 @@
+doctype html
+html
+    head
+        meta(charset='utf-8')
+        title #{title}
+    body
+        link(href='https://fonts.googleapis.com/css?family=Inconsolata:400,700', rel='stylesheet', type='text/css')
+        link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7', crossorigin='anonymous')
+        style.
+            body {
+            font-family: 'Inconsolata', sans-serif;
+            font-size: 16px;
+            }
+            ul {
+            width: 300px;
+            margin: 20px;
+            }
+            code {
+            color: #FFF;
+            background-color: #042A48;
+            }
+            .table-static {
+            margin-bottom:10px;
+            }
+            thead th {
+            color: #FFF;
+            background-color: #01213A;
+            }
+            th {
+            background-color: #91A0AC;
+            }
+            td {
+            background-color: #C3C6C8;
+            }
+            .nav-sidebar {
+            position: fixed;
+            height: 100%;
+            padding-bottom: 40px;
+            border-right: 1px solid #ddd;
+            overflow: auto;
+            overflow-x: hidden;
+            }
+            .side-nav.nav > li.nav-header > a {
+            cursor: default;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            }
+            .side-nav > ul.nav > li > a:hover {
+            width: 250px;
+            }
+            ul.nav.nav-tabs.nav-justified {
+            margin-left: 0px;
+            }
+            .json-markup {
+            padding: 1em 2em;
+            white-space: pre;
+            color: #C3C6C8;
+            background-color: #042A48;
+            }
+            .json-markup-key {
+            font-weight: bold;
+            }
+            .json-markup-bool {
+            color: #A8573D;
+            }
+            .json-markup-string {
+            color: #AA8C3D;
+            }
+            .json-markup-null {
+            color: #CFCFCF;
+            }
+            .json-markup-number {
+            color: #92B076;
+            }
+        div(ng-cloak='', ng-app='app')
+            .container-fluid(ng-cloak='', ng-controller='controller', ng-init='init({"schemaUrl": "#{schemaUrl}"})')
+                .row
+                    nav.col-sm-3.col-md-2.nav-sidebar
+                        .container
+                            ul.side-nav.nav.nav-pills.nav-stacked
+                                li.nav-header
+                                    a(href='#top') Top of Page
+                            span(ng-repeat='item in sidebarItems')
+                                ul.side-nav.nav.nav-pills.nav-stacked
+                                    li.nav-header {{item.name}}
+                                    li(ng-repeat='subResource in item.subResources')
+                                        a(href='#{{subResource.method}}{{subResource.uri}}') {{subResource.name}}
+                .row
+                    .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2(id='/top')
+                        br
+                        h1 #{title}
+                        br
+                        .row(ng-repeat='resource in resources track by $index')
+                            .col-xs-12
+                                h2 {{resource.resource}}
+                                h4(ng-if='resource.description') {{resource.description}}
+                                div(ng-repeat='item in resource', ng-if='item.properties')
+                                    hr(id='/{{item.method}}{{item.uri}}')
+                                    h4 {{item.name}}
+                                    p
+                                        strong
+                                            | {{item.method}} 
+                                            strong
+                                                code {{item.uri}}
+                                    span(ng-if='item.header', ng-init='item=item.header')
+                                        br
+                                        h4 Header
+                                        span(ng-include='', src="'table.tpl'")
+                                    br
+                                    h4 Parameters
+                                    span(ng-include='', src="'table.tpl'")
+                                    span(ng-if='item.response', ng-init='item=item.response')
+                                        br
+                                        h4 Response Success Format
+                                        span(ng-include='', src="'table.tpl'")
+                                        .row(ng-if='item.examples')
+                                            .col-xs-12
+                                                h4 Examples
+                                                uib-tabset(justified='true')
+                                                    uib-tab(ng-repeat='example in item.examples', heading=' {{example.status.type}} : {{example.status.code}}')
+                                                        div(ng-bind-html='htmlifyJSON(example.properties)')
+                                hr
+            script(type='text/ng-template', id='table.tpl').
+                <table ng-if="item.type === 'object'" class="table table-bordered table-static">
+                <thead>
+                <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Meta</th>
+                <th>Description</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="(prop, spec) in item.properties">
+                <th>{{prop}} <span ng-if="spec.required" class="small">(required)</span></th>
+                <td ng-bind-html="formatType(spec)"></td>
+                <td><span ng-include src="'meta.tpl'"></span></td>
+                <td>{{spec.description}}</td>
+                </tr>
+                </table>
+                <table ng-if="item.type !== 'object'" class="table table-bordered table-static">
+                <thead>
+                <tr>
+                <th>Type</th>
+                <th>Meta</th>
+                <th>Description</th>
+                </tr>
+                </thead>
+                <tr>
+                <td ng-bind-html="formatType(item)"></td>
+                <td ng-bind-html="formatNonObjSpecMeta(item)"></td>
+                <td>{{item.description}}</td>
+                </tr>
+                </table>
+            script(type='text/ng-template', id='meta.tpl').
+                <span ng-if="spec.type === 'array'">
+                <p ng-bind-html="formatSpecMeta(spec)"></p>
+                <p>Allowed Formats</p>
+                <span ng-repeat="item in spec.items" ng-include src="'table.tpl'"></span>
+                </span>
+                <span ng-if="spec.type === 'object'" ng-include src="'table.tpl'"></span>
+                <span ng-if="spec.type !== 'array' && spec.type !== 'object'" ng-bind-html="formatSpecMeta(spec)"></span>
+        br
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-sanitize.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.9.0/lodash.min.js')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS', crossorigin='anonymous')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.2/ui-bootstrap-tpls.min.js')
+        script(src='bundle.js')

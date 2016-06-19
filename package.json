@@ -1,10 +1,12 @@
 {
   "name": "json-schema-docs",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "scripts": {
     "start": "node ./app.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "jade": "^1.11.0"
+  },
   "devDependencies": {
     "browserify": "^13.0.1",
     "express": "~4.13.1",
