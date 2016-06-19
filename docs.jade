@@ -74,7 +74,7 @@ html
             color: #92B076;
             }
         div(ng-cloak='', ng-app='app')
-            .container-fluid(ng-cloak='', ng-controller='controller', ng-init='init({"schemaUrl": "#{schemaUrl}"})')
+            .container-fluid(ng-cloak='', ng-controller='controller', ng-init='init({"schema": #{schema}})')
                 .row
                     nav.col-sm-3.col-md-2.nav-sidebar
                         .container

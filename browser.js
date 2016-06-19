@@ -1,15 +1,9 @@
 var jsonMarkup = require('json-markup')
 var path = require('path')
 
-angular.module('app', ['ui.bootstrap', 'ngSanitize']).config(function($httpProvider){
-    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-}).controller('controller', function($scope, $http, $timeout){
-
+angular.module('app', ['ui.bootstrap', 'ngSanitize']).controller('controller', function($scope){
     $scope.init = function (params) {
-        $http.get(params.schemaUrl).then(function(res){
-            $scope.schema = mapJSON(res.data)
-        })
-
+        $scope.schema = mapJSON(params.schema)
     }
 
     function mapJSON(schema) {
