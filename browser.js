@@ -28,9 +28,8 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).controller('controller', f
                         if (!nextRootUri.length) {
                             console.error("You are missing a rootUri!")
                         }
-                        rootUri = path.join(rootUri, nextRootUri)
 
-                        buildFlatResourcesList(item, rootUri)
+                        buildFlatResourcesList(item, path.join(rootUri, nextRootUri))
                         item = _.omit(item, k)
                     }
                 })

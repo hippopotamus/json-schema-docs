@@ -3,11 +3,11 @@ let express = require('express');
 let app = express();
 
 let schemaDocs = require('./index')
-var docs = schemaDocs({ title: "My Api Docs", schema: require('./schemas') })
 
 app.use(express.static(__dirname))
 let router = express.Router();
 router.get('/docs', function (req, res) {
+    var docs = schemaDocs({ title: "My Api Docs", schema: require('./schemas') })
     res.send(docs)
 })
 
