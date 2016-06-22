@@ -4,6 +4,42 @@ module.exports = {
     "resource": "Addresses",
     "description": "URIs for addresses",
     rootUri: "/addresses",
+    test: {
+        name: "TEST",
+        method: "POST",
+        uri: "/",
+        type:"object",
+        properties: {
+            issuerId: { type: "string", format: "uuid" },
+            receiverId: { type: "string", format: "uuid" },
+            title: { type: "string", minLength: 4, maxLength: 60 },
+            type: { type: "string" },
+            code: { type: "string", pattern: "\\w+", minLength: 4, maxLength: 15, },
+            amount: { type: "number", minimum: 0 },
+            unit: { type: "string" },
+            quantity: { anyOf: [{ type: "null" }, { type: "integer", minimum: 1 }] }, // null means infinite
+            expiresAt: { type: "string", format: "date-time" },
+            isActive: { type: "boolean" },
+            salesforceCampaignId: { type: "string" },
+            resultingPromotion: {
+                type: "object",
+                properties: {
+                    issuerId: { type: "string", format: "uuid" },
+                    receiverId: { type: "string", format: "uuid" },
+                    title: { type: "string", minLength: 4, maxLength: 60 },
+                    type: { type: "string" },
+                    code: { type: "string", pattern: "\\w+", minLength: 4, maxLength: 15, },
+                    amount: { type: "number", minimum: 0 },
+                    unit: { type: "string" },
+                    quantity: { anyOf: [{ type: "null" }, { type: "integer", minimum: 1 }] }, // null means infinite
+                    expiresAt: { type: "string", format: "date-time" },
+                    isActive: { type: "boolean" },
+                },
+                required: ["code", "amount", "unit", "quantity", "isActive"],
+            },
+        },
+        required: ["code", "amount", "unit", "quantity", "isActive"],
+    },
     "create": {
         "name": "Create Address",
         "uri": "/",

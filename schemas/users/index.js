@@ -1,12 +1,9 @@
-var schema = {
-
-}
-
 module.exports = {
     'resource': 'User',
     "description": "URIs for users",
     rootUri: "/users",
     "create": {
+        name: "CREATE",
         uri: "/",
         "method": "POST",
         'fn': 'create',

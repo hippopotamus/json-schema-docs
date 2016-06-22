@@ -158,7 +158,7 @@ html
                 <p>Allowed Formats</p>
                 <span ng-repeat="item in spec.items" ng-include src="'table.tpl'"></span>
                 </span>
-                <span ng-if="spec.type === 'object'" ng-include src="'table.tpl'"></span>
+                <span ng-if="spec.type === 'object'" ng-include src="'table.tpl'" ng-init="item=spec"></span>
                 <span ng-if="spec.type !== 'array' && spec.type !== 'object'" ng-bind-html="formatSpecMeta(spec)"></span>
         br
         script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.js')

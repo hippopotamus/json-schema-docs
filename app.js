@@ -6,6 +6,7 @@ let schemaDocs = require('./index')
 
 app.use(express.static(__dirname))
 let router = express.Router();
+
 router.get('/docs', function (req, res) {
     var docs = schemaDocs({ title: "My Api Docs", schema: require('./schemas') })
     res.send(docs)
