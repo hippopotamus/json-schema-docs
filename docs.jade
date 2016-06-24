@@ -153,10 +153,14 @@ html
                 </tr>
                 </table>
             script(type='text/ng-template', id='meta.tpl').
-                <span ng-if="spec.type === 'array'">
+                <span ng-if="spec.type === 'array' && spec.items.length">
                 <p ng-bind-html="formatSpecMeta(spec)"></p>
                 <p>Allowed Formats</p>
                 <span ng-repeat="item in spec.items" ng-include src="'table.tpl'"></span>
+                </span>
+                <span ng-if="spec.type === 'array' && !spec.items.length">
+                <p ng-bind-html="formatSpecMeta(spec)"></p>
+                <span ng-include src="'table.tpl'" ng-init="item=spec.items"></span>
                 </span>
                 <span ng-if="spec.type === 'object'" ng-include src="'table.tpl'" ng-init="item=spec"></span>
                 <span ng-if="spec.type !== 'array' && spec.type !== 'object'" ng-bind-html="formatSpecMeta(spec)"></span>

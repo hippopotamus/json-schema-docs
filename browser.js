@@ -133,9 +133,9 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).controller('controller', f
     }
 
     $scope.formatNonObjSpecMeta = function (spec) {
-        var omittedSpecs = _.omit(spec, ['type', 'description', '$$hashKey', 'required', 'status'])
+        var omittedSpecs = _.omit(JSON.parse(angular.toJson(spec)), ['type', 'description', '$$hashKey', 'required', 'status'])
         if (!_.keys(omittedSpecs).length) {
-            return
+            return ""
         }
 
         return _.map(_.keys(omittedSpecs), function (key) {
