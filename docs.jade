@@ -16,15 +16,15 @@ html
             margin: 20px;
             }
             code {
-            color: #FFF;
-            background-color: #042A48;
+            color: #{code.color};
+            background-color: #{code.backgroundColor};
             }
             .table-static {
             margin-bottom:10px;
             }
             thead th {
-            color: #FFF;
-            background-color: #01213A;
+            color: #{thead.th.color};
+            background-color: #{thead.th.backgroundColor};
             }
             th {
             background-color: #91A0AC;
@@ -55,23 +55,23 @@ html
             .json-markup {
             padding: 1em 2em;
             white-space: pre;
-            color: #C3C6C8;
-            background-color: #042A48;
+            color: #{jsonMarkup.color};
+            background-color: #{jsonMarkup.backgroundColor};
             }
             .json-markup-key {
             font-weight: bold;
             }
             .json-markup-bool {
-            color: #A8573D;
+            color: #{jsonMarkup.boolean.color};
             }
             .json-markup-string {
-            color: #AA8C3D;
+            color: #{jsonMarkup.string.color};
             }
             .json-markup-null {
-            color: #CFCFCF;
+            color: #{jsonMarkup.null.color};
             }
             .json-markup-number {
-            color: #92B076;
+            color: #{jsonMarkup.number.color};
             }
         div(ng-cloak='', ng-app='app')
             .container-fluid(ng-cloak='', ng-controller='controller', ng-init='init({"schema": #{schema}})')

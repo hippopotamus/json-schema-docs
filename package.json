@@ -1,6 +1,6 @@
 {
   "name": "json-schema-docs",
-  "version": "0.0.31",
+  "version": "0.0.4",
   "scripts": {
     "start": "node ./app.js"
   },
