@@ -160,6 +160,7 @@ html
                 </span>
                 <span ng-if="spec.type === 'array' && !spec.items.length">
                 <p ng-bind-html="formatSpecMeta(spec)"></p>
+                <p>Allowed Format</p>
                 <span ng-include src="'table.tpl'" ng-init="item=spec.items"></span>
                 </span>
                 <span ng-if="spec.type === 'object'" ng-include src="'table.tpl'" ng-init="item=spec"></span>
