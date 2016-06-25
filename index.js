@@ -47,9 +47,6 @@ var configurableStyles = {
     },
 }
 
-/*  such shitty hacking,
-    but writing API docs
-    is more mind numbing */
 module.exports = function (params) {
     if (!_.isString(params.title)) {
         throw "`title` must be a string."
@@ -62,7 +59,5 @@ module.exports = function (params) {
     throwIfValNotObj(locals.thead)
 
     /* injecting js inline, so that it only requires serving 1 file */
-    var template = jade.compileFile(__dirname+'/docs.jade')(locals).replace(' src="bundle.js">', '>'+fs.readFileSync(__dirname+'/bundle.js'))
-    template = template.slice(0, template.indexOf('//# sourceMappingURL'))+'</script></body></html>' // quick hack removing browserify sourcemaps
-    return template
+    return jade.compileFile(__dirname+'/docs.jade')(locals).replace(' src="bundle.js">', '>'+fs.readFileSync(__dirname+'/bundle.js'))
 }

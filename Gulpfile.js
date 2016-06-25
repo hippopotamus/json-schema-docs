@@ -2,10 +2,8 @@ var gulp = require('gulp')
 var browserify = require('browserify')
 var watchify = require('watchify')
 var source = require('vinyl-source-stream')
-var rename = require('gulp-rename')
 var gutil = require('gulp-util')
 var _ = require('lodash')
-var injector = require('gulp-inject-string')
 var fs = require('fs')
 
 var b = watchify(browserify(_.assign({}, watchify.args, { entries: ['./browser.js'], debug: true })));
@@ -22,13 +20,8 @@ gulp.task('watch', ['bundle'], function () {
     gulp.watch(['./browser.js'], ['bundle'])
 })
 
-
-var jsBundle = fs.readFileSync('./bundle.js').toString()
-
-gulp.task('inject-js', function () {
-    return gulp.src('./docs.html')
-    .pipe(injector.replace(' src="bundle.js"', ''))
-    .pipe(injector.replace('// inject:js', jsBundle))
-    .pipe(rename('json-schema-docs.html'))
-    .pipe(gulp.dest('./'))
+gulp.task('pkg', ['bundle'], function () {
+    var bundleFile = fs.readFileSync('./bundle.js').toString().replace(' src="bundle.js">', '>'+fs.readFileSync(__dirname+'/bundle.js'))
+    bundleFile = bundleFile.slice(0, bundleFile.indexOf('//# sourceMappingURL')) // quick hack removing browserify sourcemaps
+    return fs.writeFileSync('./bundle.js', bundleFile)
 })

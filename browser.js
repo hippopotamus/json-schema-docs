@@ -116,19 +116,25 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).controller('controller', f
             return
         }
 
-        var omittedSpecs = _.omit(spec, ['type', 'description', '$$hashKey', 'required', 'items'])
+        var omittedSpecs = _.omit(JSON.parse(angular.toJson(spec)), ['type', 'description', '$$hashKey', 'required', 'items'])
         if (!_.keys(omittedSpecs).length) {
             return
         }
 
         return _.map(_.keys(omittedSpecs), function (key) {
             var val = omittedSpecs[key]
+
             if (_.isArray(val)) {
-                return '<strong>'+key+':</strong> '+val.join(', ')
+                val = _.map(val, function (item) {
+                    return _.isObject(item) ? JSON.stringify(item) : item
+                }).join(', ')
             } else if (key === 'pattern') {
-                return '<strong>'+key+':</strong> '+'/val/'.replace('val', val)
+                val = '/val/'.replace('val', val)
+            } else if (_.isObject(val)) {
+                console.log(val)
+                val = JSON.stringify(val)
             }
-            return '<strong>'+key+':</strong> '+val
+            return '<strong>'+key+':</strong> ' + val
         }).join(', ')
     }
 
@@ -139,7 +145,7 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).controller('controller', f
         }
 
         return _.map(_.keys(omittedSpecs), function (key) {
-            return '<strong>'+key+':</strong> '+omittedSpecs[key]
+            return '<strong>'+key+':</strong> ' + omittedSpecs[key]
         }).join(', ')
     }
 
