@@ -73,8 +73,18 @@ html
             .json-markup-number {
             color: #{jsonMarkup.number.color};
             }
-        div(ng-cloak='', ng-app='app')
+            [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+            }
+            .loading {
+            position: fixed;
+            top: 40%;
+            left: 45%;
+            }
+        div(ng-app='app')
+            h1(ng-show, class="loading") Loading...
             .container-fluid(ng-cloak='', ng-controller='controller', ng-init='init({"schema": #{schema}})')
+
                 .row
                     nav.col-sm-3.col-md-2.nav-sidebar
                         .container
