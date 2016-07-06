@@ -44,7 +44,7 @@ module.exports = {
         "name": "Create Address",
         "uri": "/",
         "method": "POST",
-        "header": {
+        "headers": {
             "type": "object",
             "properties": {
                 "clientId": { "type": "string", "format": "uuid", "required": true },
@@ -95,7 +95,7 @@ module.exports = {
         "name": "Get Address By Id",
         "uri": "/:addressId",
         "method": "GET",
-        "header": {
+        "headers": {
             "type": "object",
             "properties": {
                 "clientId": { "type": "string", "format": "uuid", "required": true, },
@@ -156,7 +156,7 @@ module.exports = {
         "name": "Update Address",
         "uri": "/:addressId",
         "method": "PUT",
-        "header": {
+        "headers": {
             "type": "object",
             "properties": {
                 "clientId": { "type": "string", "format": "uuid", "required": true, "description": "For headers, put \"required\": true to get the required on it" },
@@ -186,7 +186,7 @@ module.exports = {
         "name": "Delete Address",
         "uri": "/:addressId",
         "method": "DELETE",
-        "header": {
+        "headers": {
             "type": "object",
             "properties": {
                 "clientId": { "type": "string", "format": "uuid", "required": true, },

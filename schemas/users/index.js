@@ -7,7 +7,7 @@ module.exports = {
         uri: "/",
         "method": "POST",
         'fn': 'create',
-        "header": {
+        "headers": {
             "type": "object",
             "properties": {
                 "clientId": { "type": "string", "format": "uuid", "required": true, "description": "For headers, put \"required\": true to get the required on it" },
@@ -147,7 +147,7 @@ module.exports = {
         "name": "Update User",
         uri: "/:id",
         "method": "PUT",
-        "header": {
+        "headers": {
             "type": "object",
             "properties": {
                 "clientid": { "type": "string", "format": "uuid", "required": true, "description": "For headers, put \"required\": true to get the required on it" },
@@ -176,7 +176,7 @@ module.exports = {
         "name": "Delete User",
         uri: "/:id",
         "method": "DELETE",
-        "header": {
+        "headers": {
             "type": "object",
             "properties": {
                 "clientId": { "type": "string", "format": "uuid", "required": true, },

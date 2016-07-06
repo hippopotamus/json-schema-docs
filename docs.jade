@@ -113,9 +113,9 @@ html
                                             | {{item.method}} 
                                             strong
                                                 code {{item.uri}}
-                                    span(ng-if='item.header', ng-init='item=item.header')
+                                    span(ng-if='item.headers', ng-init='item=item.headers')
                                         br
-                                        h4 Header
+                                        h4 Headers
                                         span(ng-include='', src="'table.tpl'")
                                     br
                                     h4 Parameters
