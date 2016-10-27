@@ -60,34 +60,48 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).controller('controller', f
     }
 
     function mapRequiredOntoProperties (resource) {
-        var properties = _.get(resource, 'properties')
-        var requiredProperties = _.get(resource, 'required')
-        if (properties && requiredProperties) {
-            _.forEach(requiredProperties, function (propertyName) {
-                var property = _.get(properties, propertyName)
-                if (!property) {
-                    console.log(
-                        "Property {prop} is listed as required in resource {resource}, but is not in the schema"
-                        .replace('{prop}', propertyName).replace('{resource}', _.get(resource, 'name'))
-                    )
-                } else {
-                    _.merge(property, { required: true })
+        var arrayProps = _.get(resource, 'anyOf')
+        if (arrayProps) {
+            for (var i=0; i < arrayProps.length; i++) {
+                var props = arrayProps[i]
+
+                props.type = 'object'
+                props.required = _.uniq(_.concat(_.get(props, 'required', []), _.get(resource, 'required', [])))
+
+                mapRequiredOntoProperties(props)
+            }
+        } else {
+            var properties = _.get(resource, 'properties')
+            var requiredProperties = _.get(resource, 'required')
+
+            if (properties && requiredProperties) {
+                _.forEach(requiredProperties, function (propertyName) {
+                    var property = _.get(properties, propertyName)
+                    if (!property) {
+                        console.log(
+                            "Property {prop} is listed as required in resource {resource}, but is not in the schema"
+                            .replace('{prop}', propertyName).replace('{resource}', _.get(resource, 'name'))
+                        )
+                    } else {
+                        _.merge(property, { required: true })
+                    }
+                })
+            }
+            /* if there is an object, recurse onto it */
+            _.forEach(_.keys(resource), function (key) {
+                /* if it's an object, go deeper */
+                if (_.isObject(resource[key])) {
+                    mapRequiredOntoProperties(resource[key])
+                }
+                if (key === 'items' && _.isArray(resource[key])) {
+                    /* items can have an array of objects, so tree recursion here :) */
+                    _.forEach(resource[key], function (item) {
+                        mapRequiredOntoProperties(resource[key])
+                    })
                 }
             })
         }
-        /* if there is an object, recurse onto it */
-        _.forEach(_.keys(resource), function (key) {
-            /* if it's an object, go deeper */
-            if (_.isObject(resource[key])) {
-                mapRequiredOntoProperties(resource[key])
-            }
-            if (key === 'items' && _.isArray(resource[key])) {
-                /* items can have an array of objects, so tree recursion here :) */
-                _.forEach(resource[key], function (item) {
-                    mapRequiredOntoProperties(resource[key])
-                })
-            }
-        })
+
     }
 
     $scope.formatType = function (item) {

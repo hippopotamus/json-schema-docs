@@ -105,7 +105,7 @@ html
                             .col-xs-12
                                 h2 {{resource.resource}}
                                 h4(ng-if='resource.description') {{resource.description}}
-                                div(ng-repeat='item in resource', ng-if='item.properties')
+                                div(ng-repeat='item in resource', ng-if='item.properties || item.anyOf')
                                     hr(id='/{{item.method}}{{item.uri}}')
                                     h4 {{item.name}}
                                     p
@@ -119,7 +119,10 @@ html
                                         span(ng-include='', src="'table.tpl'")
                                     br
                                     h4 Parameters
-                                    span(ng-include='', src="'table.tpl'")
+                                        span(ng-if="item.anyOf") &nbsp=> Any Of The Formats Below Are Permitted
+                                    span(ng-if="item.anyOf")
+                                        span(ng-repeat="i in item.anyOf" ng-init="item=i" ng-include='', src="'table.tpl'")
+                                    span(ng-if="!item.anyOf" ng-include='', src="'table.tpl'")
                                     span(ng-if='item.response', ng-init='item=item.response')
                                         br
                                         h4 Response Success Format
@@ -141,7 +144,7 @@ html
                 <th>Description</th>
                 </tr>
                 </thead>
-                <tr ng-repeat="(prop, spec) in item.properties">
+                <tr ng-if="item.properties" ng-repeat="(prop, spec) in item.properties">
                 <th>{{prop}} <span ng-if="spec.required" class="small">(required)</span></th>
                 <td ng-bind-html="formatType(spec)"></td>
                 <td><span ng-include src="'meta.tpl'"></span></td>

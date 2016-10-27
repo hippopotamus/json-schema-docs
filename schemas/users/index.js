@@ -2,6 +2,48 @@ module.exports = {
     'resource': 'User',
     "description": "URIs for users",
     rootUri: "/users",
+    sendNotification: {
+        name: 'Send Notification',
+        method: 'POST',
+        uri: '/:userId/notifications',
+        roles: [ 'unauthorized' ],
+        type: 'object',
+        anyOf: [
+            {
+                properties: {
+                    userId: { type: 'string', format: 'uuid', description: 'params.userId will be injected with userId from uri' },
+                    notification: { constant: 'askForAddress', roles: [ 'tutor', 'admin' ] },
+                    params: {
+                        type: 'object',
+                        properties: {
+                            tutorId: { type: 'array', items: { type: 'string', format: 'uuid' } },
+                        },
+                        required: [ 'tutorId' ],
+                    },
+                },
+            },
+            {
+                properties: {
+                    userId: { type: 'string', format: 'uuid', description: 'params.userId will be injected with userId from uri' },
+                    notification: { constant: 'lol2369', roles: [] },
+                    params: {
+                        type: 'object',
+                        properties: {
+                            tutorId: { type: 'string', format: 'uuid' },
+                            student: {
+                                type: 'object',
+                                properties: {
+                                    lol: { type: 'string', format: 'uuid' }
+                                }
+                            },
+                        },
+                        required: [ 'tutorId' ],
+                    },
+                },
+            },
+        ],
+        required: [ 'userId', 'notification', 'params' ],
+    },
     "create": {
         name: "CREATE",
         uri: "/",
