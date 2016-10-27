@@ -17,6 +17,30 @@ module.exports = {
                         type: 'object',
                         properties: {
                             tutorId: { type: 'array', items: { type: 'string', format: 'uuid' } },
+                            anyOfArray: { anyOf: [
+                                {
+                                    type: 'array',
+                                    items: {
+                                        type: 'object',
+                                        properties: {
+                                            tutorId: { type: 'string', format: 'uuid' },
+                                            student: {
+                                                type: 'object',
+                                                properties: {
+                                                    lol: { type: 'string', format: 'uuid' }
+                                                }
+                                            },
+                                        },
+                                        required: [ 'tutorId' ],
+                                    }
+                                },
+                                {
+                                    type: 'object',
+                                    properties: {
+                                        dubs: { type: 'number', minimum: 11, maximum: 99 }
+                                    }
+                                }
+                            ] }
                         },
                         required: [ 'tutorId' ],
                     },

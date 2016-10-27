@@ -65,8 +65,14 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).controller('controller', f
             for (var i=0; i < arrayProps.length; i++) {
                 var props = arrayProps[i]
 
-                props.type = 'object'
-                props.required = _.uniq(_.concat(_.get(props, 'required', []), _.get(resource, 'required', [])))
+                if (!props.type) {
+                    props.type = 'object'
+                }
+
+                var requiredProps = _.uniq(_.concat(_.get(props, 'required', []), _.get(resource, 'required', [])))
+                if (requiredProps.length) {
+                    props.required = requiredProps
+                }
 
                 mapRequiredOntoProperties(props)
             }
@@ -137,7 +143,6 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).controller('controller', f
 
         return _.map(_.keys(omittedSpecs), function (key) {
             var val = omittedSpecs[key]
-
             if (_.isArray(val)) {
                 val = _.map(val, function (item) {
                     return _.isObject(item) ? JSON.stringify(item) : item
@@ -145,7 +150,6 @@ angular.module('app', ['ui.bootstrap', 'ngSanitize']).controller('controller', f
             } else if (key === 'pattern') {
                 val = '/val/'.replace('val', val)
             } else if (_.isObject(val)) {
-                console.log(val)
                 val = JSON.stringify(val)
             }
             return '<strong>'+key+':</strong> ' + val

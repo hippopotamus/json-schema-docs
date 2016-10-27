@@ -166,6 +166,10 @@ html
                 </tr>
                 </table>
             script(type='text/ng-template', id='meta.tpl').
+                <span ng-if="spec.anyOf" ng-repeat="item in spec.anyOf">
+                <span ng-if="item.properties" ng-include='', src="'table.tpl'"></span>
+                <span ng-if="!item.properties" ng-include='', ng-init="spec=item" src="'meta.tpl'"></span>
+                </span>
                 <span ng-if="spec.type === 'array' && spec.items.length">
                 <p ng-bind-html="formatSpecMeta(spec)"></p>
                 <p>Allowed Formats</p>
@@ -177,7 +181,8 @@ html
                 <span ng-include src="'table.tpl'" ng-init="item=spec.items"></span>
                 </span>
                 <span ng-if="spec.type === 'object'" ng-include src="'table.tpl'" ng-init="item=spec"></span>
-                <span ng-if="spec.type !== 'array' && spec.type !== 'object'" ng-bind-html="formatSpecMeta(spec)"></span>
+                <span ng-if="spec.type !== 'array' && spec.type !== 'object' && !spec.anyOf" ng-bind-html="formatSpecMeta(spec)"></span>
+                </span>
         br
         script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.js')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-sanitize.min.js')
