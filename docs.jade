@@ -135,7 +135,7 @@ html
                                                         div(ng-bind-html='htmlifyJSON(example.properties)')
                                 hr
             script(type='text/ng-template', id='table.tpl').
-                <table ng-if="item.type === 'object'" class="table table-bordered table-static">
+                <table ng-if="item.type === 'object' && item.properties" class="table table-bordered table-static">
                 <thead>
                 <tr>
                 <th>Field</th>

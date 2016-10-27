@@ -44,6 +44,16 @@ module.exports = {
         ],
         required: [ 'userId', 'notification', 'params' ],
     },
+    lol: {
+        name: 'Send Notification',
+        method: 'POST',
+        uri: '/:userId/notifications',
+        roles: [ 'unauthorized' ],
+        type: 'object',
+        properties: {
+            omg: { type: 'object' }
+        }
+    },
     "create": {
         name: "CREATE",
         uri: "/",
